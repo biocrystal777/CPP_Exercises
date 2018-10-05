@@ -1,0 +1,263 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-*-LaTeX-*-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%%     standard texheader fo writing extended documents
+%%%
+%%%  
+%%%
+%%%
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%**** header *****%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[paper=A4, pagesize, DIV=calc, smallheadings,
+fontsize=11pt, expansion=false]{scrreprt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%### used packages ###%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%# standardmaessig verwendbar #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage[ngerman]{babel}      %% neue deutsche Rechtschreibung
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}    
+\usepackage{graphicx}            %% include graphics
+\usepackage{float}               %% determine image positions
+\usepackage{soul}             %% offers additional types of text formation
+                                 %% HAS TO BE INSTALLED MANUALLY
+\usepackage{ellipsis}         %% HAS TO BE INSTALLED MANUALLY
+\usepackage{xspace}             
+\usepackage{tabularx}             %% tables
+\usepackage[font={footnotesize}]{caption}%% description of images and tables 
+\usepackage{booktabs}            %% formatting of tables
+\usepackage{rotating}            
+\usepackage{multirow}
+\usepackage{geometry}            %% page geometry 
+\usepackage{scrpage2}            %% page layout
+\usepackage{dsfont}              %% math font \mathds{R}, => "Real Numbers"                 
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage[linkbordercolor={0 0 1}]{hyperref} %% links
+\usepackage{color}
+\usepackage{allrunes}
+\usepackage[expansion=false]{microtype} %% for pdfTeX 1.4 or later
+\usepackage{enumerate}
+\usepackage{mathtools}
+
+%\newcommand\colvec[1]{\begin{pmatrix}#1\end{pmatrix}
+
+
+
+\geometry{
+   a4paper,
+  twoside,
+%% paperheight=xxx,
+%% paperwidth=xxx,
+%%   outer=20mm,
+%%   inner=25mm,
+  left=30mm,
+  right=25mm,
+   top=25mm,
+   bottom=25mm,
+   includefoot
+ }
+
+\clearscrheadfoot %% clear all 6 column fields
+\pagestyle{scrheadings} 
+\cfoot[\pagemark]{\pagemark}
+\setheadwidth{text}
+\setheadsepline[text]{0.3mm}
+\ohead{\headmark}
+\automark[chapter]{chapter}
+\renewcommand{\headfont}{\bfseries}
+
+%%%%%%%%%% Crystallographic Symbols %%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Needs the font cryst.pfb installed
+%%% Symbol is created by \cry{xxx}
+\DeclareFontFamily{U}{cry}{\hyphenchar\font=-1}
+\DeclareFontShape{U}{cry}{m}{n}{ <-> cryst}{}
+\newcommand{\cry}[1]{{\usefont{U}{cry}{m}{n} \symbol{#1}}}
+
+%%%%%%% linestretch and indent of paragraphs 
+\renewcommand{\baselinestretch}{1.15}
+\parindent0pt
+
+\newenvironment{packed_item}{
+\begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}{\end{itemize}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%### macros ###%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\latex}{\LaTeX\xspace}  %% \latex for "LaTeX"
+\newcommand{\tex}{\TeX\xspace}      %% \tex for "TeX
+\renewcommand{\contentsname}{Contents}
+\renewcommand{\bibname}{References}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+
+\newcommand\colvec[1]{\begin{pmatrix}#1\end{pmatrix}}
+%\newcommand{\tvect}[3]{%
+%  \ensuremath{\Bigl(\negthinspace\begin{smallmatrix}#1\\#2\\#3\end{smallmatrix}\Bigr)}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%***** Document *****%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%***Title page(s)***%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{empty}
+\huge
+\begin{center}
+ \textbf{Einführung in die C++-Programmierung}\\
+\Large
+\textbf{Progammierkurs an der Uni Konstanz, SS2014}\\
+\large{Übungsblatt 2}
+\end{center}
+\normalsize
+\textit{Alle Aufgaben sind mit den bisher gelernten Konstrukten lösbar. Natürlich dürft ihr euch zusammensetzen, und eure Lösungsansätze diskutieren. Trotzdem solltet ihr immer noch das Programm am Ende selber schreiben und einzeln abgeben.
+  Bitte sendet mir die Quelltexte in einzelnen Dateien spätestens bis \textbf{\emph{16.5.2014}} jeweils angegebenenen Dateinamen per E-Mail zu. Bitte vermeidet Leer- und Sonderzeichen in den Dateinamen, mit Ausnahme von Unterstrichen.}\\
+\large
+\textbf{Übungen}\\
+(Stichworte: If-Branches, Zahlensysteme);
+\normalsize
+
+
+\subsection*{Lösung Kugelaufgabe}
+Kugelgleichung:~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Geradengleichung:
+\[
+ \begin{vmatrix}\colvec{x_x\\x_y\\x_z} - \colvec{m_x\\m_y\\m_z} \end{vmatrix} ^2 = r^2 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ \colvec{x_x\\x_y\\x_z} = \mu \colvec{d_x\\d_y\\d_z} + \colvec{o_x\\o_y\\o_z}
+\]
+Einsetzen:
+\[ \begin{vmatrix} \mu \colvec{d_x\\d_y\\d_z} + \colvec{o_x\\o_y\\o_z} - \colvec{m_x\\m_y\\m_z} \end{vmatrix} ^2 = r^2 \]
+Substitution: $\vec{p} \coloneqq \vec{o} - \vec{m}$,
+in Programm dann ``Vorausberechnung'':\\
+~~~~~~~~~~~~~~~~~~~~~~~~~~~ \texttt{double p\_x = o\_x - m\_x;\\
+~~~~~~~~~~~~~~~~~~~~~~~~~~~   double p\_y = o\_y - m\_y;\\
+~~~~~~~~~~~~~~~~~~~~~~~~~~~   double p\_z = o\_z - m\_z;}
+\\
+Dann den Betrag von 
+\[ \begin{vmatrix} \mu \colvec{d_x\\d_y\\d_z} + \colvec{p_x\\p_y\\p_z}\end{vmatrix} ^2 = r^2 \]
+symbolisch berechnen, dies ergibt quadratische Gleichung mit einer Unbekannten ($\mu$):
+\[ \left(\sqrt{(\mu d_x + p_x)^2 + (\mu d_y + p_y)^2 + (\mu d_z + p_z)^2}\right)^2 = r^2\]
+\[ \Leftrightarrow (\mu d_x + p_x)^2 + (\mu d_y + p_y)^2 + (\mu d_z + p_z)^2 = r^2\]
+\[ \Leftrightarrow \mu^2 d_x^2 + 2\mu d_xp_x  + p_x^2 + \mu^2 d_y^2 + 2\mu d_yp_y  + p_y^2 + \mu^2 d_z^2 + 2\mu d_zp_z  + p_z^2 = r^2\]
+\[ \Leftrightarrow \mu^2 \cdot ( d_x^2 + d_y^2 + d_z^2) + \mu \cdot \big(2 (d_xp_x + d_yp_y +d_zp_z ) \big)  + p_x^2 +  p_y^2 +  p_z^2 -r^2 = 0 \] 
+Substitutionen (Werden im Programm wieder ``Vorberechnungen''): 
+\[a \coloneqq d_x^2 + d_y^2 + d_z^2  \]
+\[b \coloneqq 2 (d_xp_x + d_yp_y +d_zp_z )  \]
+\[c \coloneqq p_x^2 + p_y^2 + p_z^2 - r^2  \]
+Berechnen der Diskrimanten $D$ der Mitternachtsformel:
+\[ D =  b^2 - 4ac\]
+\begin{itemize}
+  \item a
+  % \item Wenn $D < 0 \Rightarrow$ keine Schnitpunkte (1)
+  % \item Wenn $D = 0 \Rightarrow$ ein Schnittpunkt (Gerade ist Tangente), berechne $\mu_1y$: (2)   \[ \mu = \frac{-b +  \overbrace{\sqrt{b^2-4ac}}^\text{= 0}}{ 2a }\]
+  % \item Wenn $D > 0 \Rightarrow$ zwei Schnittpunkte (3)    \[ \mu_1 = \frac{-b + \sqrt{D}}{2a} ~~~~~~~ \mu_2 = \frac{-b + \sqrt{D}}{ 2a }\]
+\end{itemize}
+Einsetzen von $\mu$, bzw. $\mu_1$ und $\mu_2$ in die Geradengleichung liefert dann die Koordinate der Schnittpunkte.
+
+
+Trotz der langen Herleitung ist der Quelltext der tatsächlichen Berechnung recht kurz:
+
+\begin{verbatim}
+#include <iostream>
+#include <cmath>      // Enable the calculation of square roots
+using namespace std;
+
+int main(){
+  double r(10.0);
+  double m_x(5.0), m_y(6.0), m_z(7.0);
+  double d_x(8.0), d_y(9.0), d_z(10.0);
+  double o_x(13.0), o_y(12.0), o_z(11.0);
+
+  // First substitution
+  double p_x = o_x - m_x;
+  double p_y = o_y - m_y;
+  double p_z = o_z - m_z;
+
+  // Second substitution
+  double a = d_x * d_x + d_y * d_y + d_z * d_z;
+  double b = 2 * ( d_x * p_x + d_y * p_y + d_z * p_z);
+  double c = p_x * p_x + p_y * p_y + p_z * p_z - r * r;
+
+  // Calculate Discriminant
+  double D = b * b - 4 * a * c;
+
+  // Calculate intersections (if they exist)
+  if(D < 0.0){
+     cout << "There are no points of intersection." << endl; 
+  }
+  else if(D == 0.0){
+    cout << "There is one point of intersection." << endl;
+    double mu = b / (2 * a);
+    double isec_x = mu * d_x + o_x;
+    double isec_y = mu * d_y + o_y;
+    double isec_z = mu * d_z + o_z;
+    cout << "Its coordinates are (" << isec_x << ", "
+         << isec_y << ", " << isec_z << ")"<< endl;
+  }
+  else {
+    cout << "There are two point of intersection" << endl;
+    double sqD = sqrt(D);
+    double mu1 = (b - sqD) / (2 * a);
+    double isec1_x = mu1 * d_x + o_x;
+    double isec1_y = mu1 * d_y + o_y;
+    double isec1_z = mu1 * d_z + o_z;
+    double mu2 = (b + sqD) / (2 * a);
+    double isec2_x = mu2 * d_x + o_x;
+    double isec2_y = mu2 * d_y + o_y;
+    double isec2_z = mu2 * d_z + o_z;
+    cout << "Their coordinates are (" << isec1_x << ", "
+         << isec1_y << ", " << isec1_z << ") and ("
+         << isec2_x << ", " << isec2_y << ", " 
+         << isec2_z << ")" << endl;
+}
+
+\end{verbatim}
+\begin{verbatim}
+ 
+
+\end{verbatim}
+
+\textbf{Anmerkung}: Die Aufgabe kann mit diesem Ansatz auf einem Rechner nicht ``mathematisch exakt'' gelöst werden, 
+da \texttt{double}, wie schon mehrfach erwähnt, nur eine begrenzte Anzahl von Zahlen darstellen kann, 
+und somit $D$ nur näherungsweise berechnet werden kann,
+d.h. das tatsächliche Ergebnis wird auch, wenn eigentlich $D=0$ herauskommen sollte, leicht um 0.000 herum streuen. 
+\\
+Eine praktibable Möglichkeit ist in solchen Fällen, ein ``Toleranzintervall'' zu festzusetzen, in dem sich $D$ befinden darf, 
+damit das Programm den Programmpfad (2) beschreitet, auch wenn die Schnittpunkte sehr dicht beieinanderliegen:
+\begin{verbatim}
+  // Calculate intersections (if they exist)
+  double tolerance = 1e-5;
+  if(D < (-tolerance))
+  {
+    //...
+  } else if ( ((-toleranc) <= D) && (D <= tolerance))
+  {
+    //...  
+  }
+  else // if(D > tolerance)
+  {  
+    //...
+  }
+
+
+\end{verbatim}
+Auch von Hand ist diese Problem natürlich nur exakt berechenbar, wenn alle Parameter aus $\mathbb{Q}$ stammen.
+Für diesen Fall ist es möglich, mit zwei \texttt{int} eine rationale Zahl darzustellen und damit dann ``exakt'' zu rechnen.
+Die dazugehörigen Rechenregeln für die Grundrechenarten müssen dann als eigene Funktionen implementiert werden (idealerweise, indem die benötigten Rechenoperatoren überladen werden).
+Fertige Implementierungen dafür gibt es zum Beispiel in der Boost-Library.
+
+
+
+
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
